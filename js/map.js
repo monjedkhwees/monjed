@@ -4,32 +4,38 @@ var infowindow;
 var locations = [{
     name: 'bairut',
     lat: 33.893197,  
-    lng: 35.501933
+    lng: 35.501933,
+    wikiPageid: 4608353
   },
   {
     name: "Alrawshe",
     lat: 33.887212,
-    lng: 35.473351
+    lng: 35.473351,
+    wikiPageid: 4608353
   },
   {
     name: 'sanae',
     lat: 33.893421,  
-    lng: 35.490153 
+    lng: 35.490153 ,
+    wikiPageid: 4608353
   },
   {
     name: 'amircan unevercity',
     lat: 33.889787, 
-    lng: 35.474789
+    lng: 35.474789,
+    wikiPageid: 4608353
   },
   {
     name: 'International College',
     lat: 33.893421,  
-    lng: 35.490153
+    lng: 35.490153,
+    wikiPageid: 4608353
   },
   {
     name: "barbar",
     lat: 33.892744,
-    lng: 35.471570
+    lng: 35.471570,
+    wikiPageid: 4608353
   }
 ];
 
@@ -65,7 +71,7 @@ function initMap() {
         //console.log("click");
         infowindow.setContent('<p>' + location.name + '</p>');
         infowindow.open(map, marker);
-        toggleBounce();
+        toggleBounce(marker);
       });
     });
 
@@ -103,7 +109,7 @@ function toggleBounce(marker) {
   }
 }
 
-
+var wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&explaintext=&redirects=return&pageids=" + locations[0].wikiPageid + "|" + locations[1].wikiPageid + "|" + locations[2].wikiPageid + "|" + locations[3].wikiPageid + "|" + locations[4].wikiPageid + "|" + locations[5].wikiPageid + "&excontinue="
 /*function drop() {
   for (var i =0; i < markerArray.length; i++) {
     setTimeout(function() {
@@ -128,15 +134,7 @@ function toggleBounce(marker) {
   ko.applyBindings(new viewModel());
 }
 
-  function createMarker(latlng) {
-  marker = new google.maps.Marker({
-    position: latlng,
-    map: map
-  });
-
- return marker;
-} 
-
+  
 function googleError(){
   window.alert(" please try again");
 }
