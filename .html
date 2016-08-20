@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map</title>
+    <style>
+    #map {
+      width: 75%;
+      height: 920px;
+    }
+
+    .new {
+    	width: 25%;
+    	height: 100%;
+    	float: left;
+    }
+    </style>
+  </head>
+  <body>
+  <div class="new">
+    <input type="search" data-bind="textInput: value">
+    <ul data-bind="foreach: search">
+      <li  data-bind="text: name, click: $parent.locationClicked"></li>
+    </ul>
+    </div>
+    <div id="map"></div>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script src="js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJHk4w1DtXbH66psMniKqvFDu_ailLNuk&callback=initMap"  onerror="myerrorhandler()"
+    async defer></script>
+  </body>
+</html>
