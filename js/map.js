@@ -99,7 +99,10 @@ function createClickEvent(location) {
     });
 }
 
-
+function bounce(marker){
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){marker.setAnimation(null)}, 700);
+}
 
 function toggleBounce(marker) {
   if (marker.getAnimation() !== null) {
