@@ -69,45 +69,16 @@ function initMap() {
       // attach click event listener to marker
       marker.addListener('click', function() {
         //console.log("click");
-        infowindow.setContent('<p>' + location.name + '</p>');
-        infowindow.open(map, marker);
-        toggleBounce(marker);
+        getWikiData(location);
       });
     });
 
 
-function createClickEvent(location) {
-    location.marker.addListener('click', function() {
-        /* Start off by logging the location object to the console
-         * This will let you view the location object, and see if this `createClickEvent` function is working properly so far
-         */
-        console.log(location);
-
-        /*
-         * Inside this 'createClickEvent' function, the marker object can be accessed using 'location.marker'.
-         * You can use the marker variable to complete the necessary click functionality
-         */
-
-        /* TODO: use the 'setContent()' method to update the content of the 'infowindow' object */
-        toggleBounce(marker);
-        /* TODO: open the 'infowindow' object */
-        infowindow.open(map, marker);
-
-        /* TODO: bounce the map marker icon */
-        marker.addListener('click', toggleBounce);
-
-    });
 }
 
-function toggleBounce(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
 
-var wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&explaintext=&redirects=return&pageids=" + locations[0].wikiPageid + "|" + locations[1].wikiPageid + "|" + locations[2].wikiPageid + "|" + locations[3].wikiPageid + "|" + locations[4].wikiPageid + "|" + locations[5].wikiPageid + "&excontinue="
+//v
+//ar wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&explaintext=&redirects=return&pageids=" + locations[0].wikiPageid + "|" + locations[1].wikiPageid + "|" + locations[2].wikiPageid + "|" + locations[3].wikiPageid + "|" + locations[4].wikiPageid + "|" + locations[5].wikiPageid + "&excontinue="
 /*function drop() {
   for (var i =0; i < markerArray.length; i++) {
     setTimeout(function() {
@@ -126,10 +97,41 @@ var wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&for
       });
     });
     
-  };
+  
 
 
   ko.applyBindings(new viewModel());
+}
+function getWikiData(location) {
+  var marker = location.marker;
+  var name = location.name;
+   var query = location.name,
+        dt = 'jsonp',
+        wikiBase = 'http://en.wikipedia.org/w/api.php',
+        wikiUrl = wikiBase + '?action=opensearch&search=' + query + '&format=json&callback=wikiCallback';
+
+    var x = $.ajax({
+            url: wikiUrl,
+            dataType: dt,
+            success: function(response){
+                       var wikiArticleUrl = response[3][0];
+                       console.log(wikiArticleUrl);
+                      infowindow.setContent('<p>' + name + '</p>' +
+                        '<a href="' + wikiArticleUrl + '" target="_blank">go to Wikipedia Article<a/>');
+                      infowindow.open(map, marker);
+                      toggleBounce(marker);
+
+                     }
+            });
+
+}
+
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
 
   
