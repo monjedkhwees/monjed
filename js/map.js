@@ -4,38 +4,32 @@ var infowindow;
 var locations = [{
     name: 'bairut',
     lat: 33.893197,  
-    lng: 35.501933,
-    wikiPageid: 4608353
+    lng: 35.501933
   },
   {
     name: "Alrawshe",
     lat: 33.887212,
-    lng: 35.473351,
-    wikiPageid: 4608353
+    lng: 35.473351
   },
   {
     name: 'sanae',
     lat: 33.893421,  
-    lng: 35.490153 ,
-    wikiPageid: 4608353
+    lng: 35.490153 
   },
   {
     name: 'amircan unevercity',
     lat: 33.889787, 
-    lng: 35.474789,
-    wikiPageid: 4608353
+    lng: 35.474789
   },
   {
     name: 'International College',
     lat: 33.893421,  
-    lng: 35.490153,
-    wikiPageid: 4608353
+    lng: 35.490153
   },
   {
     name: "barbar",
     lat: 33.892744,
-    lng: 35.471570,
-    wikiPageid: 4608353
+    lng: 35.471570
   }
 ];
 
@@ -54,6 +48,10 @@ function initMap() {
   var viewModel = function() {
     var self = this;
     self.locations = ko.observableArray(locations);
+
+    self.locationClicked = function(location) {
+             self.locations.remove(location)
+         }
     
    self.locations().forEach(function(location) {
       // create marker object for each location
@@ -74,11 +72,7 @@ function initMap() {
     });
 
 
-}
 
-
-//v
-//ar wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&explaintext=&redirects=return&pageids=" + locations[0].wikiPageid + "|" + locations[1].wikiPageid + "|" + locations[2].wikiPageid + "|" + locations[3].wikiPageid + "|" + locations[4].wikiPageid + "|" + locations[5].wikiPageid + "&excontinue="
 /*function drop() {
   for (var i =0; i < markerArray.length; i++) {
     setTimeout(function() {
@@ -96,7 +90,7 @@ function initMap() {
         return match;
       });
     });
-    
+   } 
   
 
 
@@ -127,13 +121,16 @@ function getWikiData(location) {
 }
 
 function toggleBounce(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
+  if (marker.getAnimation() !== null) { // if the marker's animation property is 'undefined' on the first click it will be set to 'null'
+    marker.setAnimation(null); 
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 }
-
+function bounce(marker){
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){marker.setAnimation(null)}, 700);
+}
   
 function googleError(){
   window.alert(" please try again");
